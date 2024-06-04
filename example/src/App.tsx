@@ -329,16 +329,18 @@ class App extends Component<{}, State> {
                   );
 
                   return (
-                    component
-                    // <Popup
-                    //   popupContent={<HighlightPopup {...highlight} />}
-                    //   onMouseOver={(popupContent) =>
-                    //     setTip(highlight, (highlight) => popupContent)
-                    //   }
-                    //   onMouseOut={hideTip}
-                    //   key={index}
-                    //   children={component}
-                    // />
+                    // the actual popup portion doesnt work (only component shows rn)
+                    // this is because `pointer-events:none` in highlight.tsx
+                    // TODO :: fix this
+                    <Popup
+                      popupContent={<HighlightPopup {...highlight} />}
+                      onMouseOver={(popupContent) =>
+                        setTip(highlight, (highlight) => popupContent)
+                      }
+                      onMouseOut={hideTip}
+                      key={index}
+                      children={component}
+                    />
                   );
                 }}
                 highlights={highlights}
