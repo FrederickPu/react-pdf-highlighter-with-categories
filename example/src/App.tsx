@@ -52,6 +52,8 @@ const HighlightPopup = ({
 const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf";
 const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
 
+import testPdf from "./bruh.pdf"
+
 const searchParams = new URLSearchParams(document.location.search);
 
 const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
@@ -95,7 +97,7 @@ class App extends Component<{}, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => {};
+  scrollViewerTo = (highlight: any) => { };
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -142,11 +144,11 @@ class App extends Component<{}, State> {
         } = h;
         return id === highlightId
           ? {
-              id,
-              position: { ...originalPosition, ...position },
-              content: { ...originalContent, ...content },
-              ...rest,
-            }
+            id,
+            position: { ...originalPosition, ...position },
+            content: { ...originalContent, ...content },
+            ...rest,
+          }
           : h;
       }),
     });
@@ -253,7 +255,7 @@ class App extends Component<{}, State> {
             position: "relative",
           }}
         >
-          <PdfLoader url={url} beforeLoad={<Spinner />} data={data}>
+          <PdfLoader url={testPdf} beforeLoad={<Spinner />} data={data}>
             {(pdfDocument) => (
               <PdfHighlighter
                 categoryLabels={this.state.categoryLabels}
@@ -327,15 +329,16 @@ class App extends Component<{}, State> {
                   );
 
                   return (
-                    <Popup
-                      popupContent={<HighlightPopup {...highlight} />}
-                      onMouseOver={(popupContent) =>
-                        setTip(highlight, (highlight) => popupContent)
-                      }
-                      onMouseOut={hideTip}
-                      key={index}
-                      children={component}
-                    />
+                    component
+                    // <Popup
+                    //   popupContent={<HighlightPopup {...highlight} />}
+                    //   onMouseOver={(popupContent) =>
+                    //     setTip(highlight, (highlight) => popupContent)
+                    //   }
+                    //   onMouseOut={hideTip}
+                    //   key={index}
+                    //   children={component}
+                    // />
                   );
                 }}
                 highlights={highlights}

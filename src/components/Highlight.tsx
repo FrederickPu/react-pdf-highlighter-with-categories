@@ -51,7 +51,7 @@ export class Highlight extends Component<Props> {
           }
         }
       }
-      return { ...rect, background: color };
+      return { ...rect, background: color, "pointer-events": "none", opacity: .5 };
     };
 
     /* : comment && comment.category
