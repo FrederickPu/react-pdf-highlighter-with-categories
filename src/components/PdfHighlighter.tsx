@@ -97,6 +97,7 @@ interface Props<T_HT> {
   getCurrentPage: (currentPage: number) => void;
   destinationPage?: number;
   style?: CSSProperties;
+  selectionMode: boolean
 }
 
 const EMPTY_ID = "empty-id";
@@ -130,7 +131,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
-  unsubscribe = () => {};
+  unsubscribe = () => { };
 
   highlightLayerRoots: Array<Root | null> = [];
 
@@ -485,7 +486,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-            scrollMargin
+          scrollMargin
         ),
         0,
       ],
@@ -581,9 +582,14 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   };
 
   afterSelection = () => {
-    const { onSelectionFinished } = this.props;
+    const { onSelectionFinished, selectionMode } = this.props;
+
+    // if (!selectionMode) {
+    //   return
+    // }
 
     const { isCollapsed, range } = this.state;
+
 
     if (!range || isCollapsed) {
       return;
@@ -634,12 +640,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   debouncedAfterSelection: () => void = debounce(this.afterSelection, 500);
 
-  toggleTextSelection(flag: boolean) {
-    this.viewer.viewer!.classList.toggle(
-      "PdfHighlighter--disable-selection",
-      flag
-    );
-  }
 
   handleScaleValue = () => {
     if (this.viewer) {
@@ -666,8 +666,17 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
           {typeof enableAreaSelection === "function" ? (
             <MouseSelection
               categoryLabels={categoryLabels}
-              onDragStart={() => this.toggleTextSelection(true)}
-              onDragEnd={() => this.toggleTextSelection(false)}
+              onDragStart={() => this.viewer.viewer!.classList.toggle(
+                "PdfHighlighter--disable-selection",
+                true
+              )}
+              onDragEnd={this.props.selectionMode ? () => this.viewer.viewer!.classList.toggle(
+                "PdfHighlighter--disable-selection",
+                false
+              ) : () => this.viewer.viewer!.classList.toggle(
+                "PdfHighlighter--disable-selection",
+                true
+              )}
               onChange={(isVisible) =>
                 this.setState({ isAreaSelectionInProgress: isVisible })
               }

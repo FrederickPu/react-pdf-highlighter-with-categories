@@ -27,6 +27,7 @@ interface State {
   destinationPage: number;
   pageCount: number;
   currentPage: number;
+  flag: boolean;
 }
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -73,6 +74,7 @@ class App extends Component<{}, State> {
     destinationPage: 1,
     pageCount: 0,
     currentPage: 1,
+    flag: false
   };
 
   resetHighlights = () => {
@@ -159,6 +161,7 @@ class App extends Component<{}, State> {
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
+        <button onClick={() => this.setState(prev => ({ flag: !prev.flag }))}>toggle mode {this.state.flag ? "view only" : "suggest only"}</button>
         <div
           style={{
             position: "absolute",
@@ -311,6 +314,8 @@ class App extends Component<{}, State> {
                       position={highlight.position}
                       comment={highlight.comment}
                       categoryLabels={this.state.categoryLabels}
+                      pointerEvents={this.state.flag}
+                      onClick={() => console.log("uuhhhhhhhhhhhhhhhh")}
                     />
                   ) : (
                     <AreaHighlight
@@ -344,6 +349,7 @@ class App extends Component<{}, State> {
                   );
                 }}
                 highlights={highlights}
+                selectionMode={!this.state.flag}
               />
             )}
           </PdfLoader>

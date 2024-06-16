@@ -18,6 +18,7 @@ interface Props {
     text: string;
   };
   isScrolledTo: boolean;
+  pointerEvents: boolean
 }
 
 export class Highlight extends Component<Props> {
@@ -30,6 +31,7 @@ export class Highlight extends Component<Props> {
       onMouseOut,
       comment,
       isScrolledTo,
+      pointerEvents
     } = this.props;
 
     const { rects } = position;
@@ -51,7 +53,7 @@ export class Highlight extends Component<Props> {
           }
         }
       }
-      return { ...rect, background: color, "pointer-events": "none", opacity: .5 };
+      return { ...rect, background: color, "pointer-events": pointerEvents ? "auto" : "none", opacity: .5 };
     };
 
     /* : comment && comment.category
