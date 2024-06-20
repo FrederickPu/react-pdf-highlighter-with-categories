@@ -10,6 +10,7 @@ interface Props {
   toggleDocument: () => void;
   setPdfUrl: (update: string) => void;
   setPdfData: (update: Uint8Array) => void;
+  highlightRefs: React.MutableRefObject<React.RefObject<HTMLLIElement>[]>;
 }
 
 const updateHash = (highlight: IHighlight) => {
@@ -24,6 +25,7 @@ export function Sidebar({
   resetHighlights,
   setPdfUrl,
   setPdfData,
+  highlightRefs
 }: Props) {
   const [show, setShow] = useState(false);
   const [urlInput, setUrlInput] = useState("");
@@ -100,10 +102,12 @@ export function Sidebar({
         </div>
       </div>
 
+      {/* sidebar comments */}
       <ul className="sidebar__highlights">
         {highlights.map((highlight, index) => (
           <li
             key={index}
+            ref={highlightRefs.current[index]}
             className="sidebar__highlight"
             onClick={() => {
               updateHash(highlight);
