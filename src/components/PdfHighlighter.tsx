@@ -582,7 +582,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   };
 
   afterSelection = () => {
-    const { onSelectionFinished, selectionMode } = this.props;
+    const { onSelectionFinished } = this.props;
 
     // if (!selectionMode) {
     //   return
