@@ -122,13 +122,7 @@ function App() {
       false
     );
   }, [])
-  // function componentDidMount() {
-  //   window.addEventListener(
-  //     "hashchange",
-  //     scrollToHighlightFromHash,
-  //     false
-  //   );
-  // }
+
 
   function getHighlightById(id: string) {
     const { highlights } = state;
@@ -143,6 +137,7 @@ function App() {
     setState((prev) => {
       const { highlights } = prev;
       console.log("Saving highlight", highlight);
+      commentRefs.current.push(React.createRef<HTMLLIElement>())
       return {
         ...prev,
         highlights: [{ ...highlight, id: getNextId() }, ...highlights],
