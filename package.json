@@ -26,13 +26,13 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
-    "build:copy-styles-esm": "xcopy ./src/style ./dist/esm",
-    "build:copy-styles": "copy \\y ./src/style ./dist/esm && copy \\y ./src/style ./dist/cjs",
+    "build:copy-styles-esm": "cd src && copyfiles ./style/**/* ../dist/esm",
+    "build:copy-styles": "cd src && copyfiles ./style/**/* ../dist/esm && copyfiles ./style/**/* ../dist/cjs",
     "build:example": "(cd ./example && tsc && vite build)",
     "test": "tsc && npm run format:check && BROWSER=none jest --maxWorkers=1 -c jest.config.js",
     "format": "prettier --write './**/*.{js,ts,tsx}'",
     "format:check": "prettier --check './**/*.{js,ts,tsx}'",
-    "clean": "rm -rf dist"
+    "clean": "rimraf -rf dist"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -53,10 +53,12 @@
     "@types/react": "^18.0.30",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.3.1",
+    "copyfiles": "^2.4.1",
     "jest": "^27.1.0",
     "jest-puppeteer": "^6.1.0",
     "prettier": "^2.3.2",
     "puppeteer": "^9.1.1",
+    "rimraf": "^6.0.1",
     "typescript": "5.0.4",
     "vite": "^5.3.5"
   }
