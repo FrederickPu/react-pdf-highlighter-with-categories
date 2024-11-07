@@ -260,7 +260,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
     const groupedHighlights = {} as Record<number, any[]>;
 
-    for (const pageNumber of pageNumbers) {
+    for (let pageNumber of pageNumbers) {
       groupedHighlights[pageNumber] = groupedHighlights[pageNumber] || [];
       for (const highlight of allHighlights) {
         const pageSpecificHighlight = {
