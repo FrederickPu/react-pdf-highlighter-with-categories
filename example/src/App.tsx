@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
   PdfLoader,
@@ -176,7 +176,7 @@ function App() {
     }));
   }
 
-  const { url, highlights, data } = state;
+  const { highlights, data } = state;
 
   return (
     <div className="App" style={{ display: "flex", height: "100vh" }}>
